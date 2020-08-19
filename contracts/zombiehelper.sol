@@ -1,4 +1,4 @@
-pragma solidity ^0.4.25;
+pragma solidity >=0.4.21 <0.7.0;
 
 import "./zombiefeeding.sol";
 
@@ -25,7 +25,7 @@ contract ZombieHelper is ZombieFeeding {
     zombies[_zombieId].level = zombies[_zombieId].level.add(1);
   }
 
-  function changeName(uint _zombieId, string _newName) external aboveLevel(2, _zombieId) onlyOwnerOf(_zombieId) {
+  function changeName(uint _zombieId, string memory _newName) external aboveLevel(2, _zombieId) onlyOwnerOf(_zombieId) {
     zombies[_zombieId].name = _newName;
   }
 
