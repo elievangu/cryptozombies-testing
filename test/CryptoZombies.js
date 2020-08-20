@@ -1,6 +1,8 @@
 //Build Artifacts
 const CryptoZombies = artifacts.require("CryptoZombies");
 
+const zombieNames = ["Zombie 1", "Zombie 2"];
+const utils = require("./helpers/utils");
 //The contract() function
 contract("CryptoZombies", (accounts) => {
   //initiate "alice" and "bob"
@@ -28,10 +30,8 @@ contract("CryptoZombies", (accounts) => {
 
   it("should be able to create a new zombie", async () => {
 
-    //Creation of an instance of our contract
-    //contractInstance = await CryptoZombies.new();
-
-    
+    /*Creation of an instance of our contract
+      contractInstance = await CryptoZombies.new();*/
 
     //Declaration of a const named result and set it equal to the result of contractInstance.createRandomZombie
     const result = await contractInstance.createRandomZombie(zombieNames[0], {from: alice});
@@ -45,6 +45,10 @@ contract("CryptoZombies", (accounts) => {
 
   //define the new it() function
   it("should not allow two zombies", async () => {
+    //let's have Alice create her first zombie with zombieNames[0] name
+    await contractInstance.createRandomZombie(zombieNames[0], {from: alice});
 
+    //run shouldThrow with createRandomZombie as the parameter
+    await utils.shouldThrow(contractInstance.createRandomZombie(zombieNames[1], {from: alice}));
   })
 })
