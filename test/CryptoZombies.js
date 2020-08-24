@@ -56,9 +56,24 @@ contract("CryptoZombies", (accounts) => {
 
   /*To group tests, Truffle provides a function called context*/
   /* if we just place an x in front of the context() functions as follows: xcontext(), Truffle will skip those tests.*/
-  xcontext("with the single-step transfer scenario", async () => {
+  context("with the single-step transfer scenario", async () => {
     it("should transfer zombie", async () => {
       // TODO: Test the single-step transfer scenario.
+      
+      /*call createRandomZombie*/
+      const result = await contractInstance.createRandomZombie(zombieNames[0], {from: alice});
+
+      /*declare a const named zombieId and set it equal to the zombie's id*/
+      const zombieId = result.logs[0].args.zombieId.toNumber();
+
+      /*call transferFrom with alice and bob as the first parameters*/
+      await contractInstance.transferFrom(alice, bob, zombieId, {from: alice});
+
+      /*Declare a const called newOwner. Set it equal to ownerOf called with zombieId*/
+      const newOwner = await contractInstance.ownerOf(zombieId);
+      
+      /*check whether Bob owns this ERC721 token*/
+      assert.equal(newOwner, bob);
     }) 
   })
   xcontext("with the single-step transfer scenario", async () => {
