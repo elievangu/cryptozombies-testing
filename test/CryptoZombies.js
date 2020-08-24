@@ -43,7 +43,7 @@ contract("CryptoZombies", (accounts) => {
     assert.equal(result.logs[0].args.name, zombieNames[0]);
   })
 
-  //define the new it() function
+  //define the a new it() function
   it("should not allow two zombies", async () => {
     //let's have Alice create her first zombie with zombieNames[0] name
     await contractInstance.createRandomZombie(zombieNames[0], {from: alice});
@@ -51,4 +51,24 @@ contract("CryptoZombies", (accounts) => {
     //run shouldThrow with createRandomZombie as the parameter
     await utils.shouldThrow(contractInstance.createRandomZombie(zombieNames[1], {from: alice}));
   })
+
+  //Transferring zombies scenarios
+
+  /*To group tests, Truffle provides a function called context*/
+  /* if we just place an x in front of the context() functions as follows: xcontext(), Truffle will skip those tests.*/
+  xcontext("with the single-step transfer scenario", async () => {
+    it("should transfer zombie", async () => {
+      // TODO: Test the single-step transfer scenario.
+    }) 
+  })
+  xcontext("with the single-step transfer scenario", async () => {
+    it("should transfer zombie", async () => {
+      // TODO: Test the two-step scenario.  The approved address calls transferFrom
+    })
+
+    it("should transfer zombie", async () => {
+      // TODO: Test the two-step scenario.  The owner calls transferFrom
+    }) 
+  })
+  
 })
