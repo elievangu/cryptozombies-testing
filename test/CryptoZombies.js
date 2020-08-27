@@ -77,11 +77,18 @@ contract("CryptoZombies", (accounts) => {
     }) 
   })
   xcontext("with the single-step transfer scenario", async () => {
-    it("should transfer zombie", async () => {
+    it("should approve and then transfer a zombie when the approved address calls transferForm", async () => {
       // TODO: Test the two-step scenario.  The approved address calls transferFrom
+      const result = await contractInstance.createRandomZombie(zombieNames[0], {from: alice});
+      const zombieId = result.logs[0].args.zombieId.toNumber();
+      /*in order to have Bob approved to take the ERC721 token, we call approve()*/
+      await contractInstance.approve(bob, zombieId, {from: alice});
+      await contractInstance.transferFrom(alice, bob, zombieId, {from: bob});
+      const newOwner = await contractInstance.ownerOf(zombieId);
+      assert.equal(newOwner,bob);
     })
 
-    it("should transfer zombie", async () => {
+    xit("should approve and then transfer a zombie when the owner calls transferForm", async () => {
       // TODO: Test the two-step scenario.  The owner calls transferFrom
     }) 
   })
