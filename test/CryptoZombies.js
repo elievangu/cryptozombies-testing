@@ -1,5 +1,7 @@
 //Build Artifacts
 const CryptoZombies = artifacts.require("CryptoZombies");
+//import expect into our project
+var expect = require('chai').expect;
 
 const zombieNames = ["Zombie 1", "Zombie 2"];
 const utils = require("./helpers/utils");
@@ -38,10 +40,13 @@ contract("CryptoZombies", (accounts) => {
     const result = await contractInstance.createRandomZombie(zombieNames[0], {from: alice});
 
     //Once we have the result, call assert.equal with two arguments- result.receipt.status and true.
-    assert.equal(result.receipt.status, true);
+    //assert.equal(result.receipt.status, true);
+    /*replace assert.equal by expect*/
+    expect(result.receipt.status).to.equal(true);
     
     //Check if result.logs[0].args.name equals to zombieNames[0] using assert.equal
-    assert.equal(result.logs[0].args.name, zombieNames[0]);
+    //assert.equal(result.logs[0].args.name, zombieNames[0]);
+    expect(result.logs[0].args.name).to.equal(zombieNames[0]);
   })
 
   //define the a new it() function
@@ -74,7 +79,8 @@ contract("CryptoZombies", (accounts) => {
       const newOwner = await contractInstance.ownerOf(zombieId);
       
       /*check whether Bob owns this ERC721 token*/
-      assert.equal(newOwner, bob);
+      //assert.equal(newOwner, bob);
+      expect(newOwner).to.equal(bob);
     }) 
   })
   context("with the single-step transfer scenario", async () => {
@@ -86,7 +92,8 @@ contract("CryptoZombies", (accounts) => {
       await contractInstance.approve(bob, zombieId, {from: alice});
       await contractInstance.transferFrom(alice, bob, zombieId, {from: bob});
       const newOwner = await contractInstance.ownerOf(zombieId);
-      assert.equal(newOwner,bob);
+      //assert.equal(newOwner,bob);
+      expect(newOwner).to.equal(bob);
     })
 
     it("should approve and then transfer a zombie when the owner calls transferForm", async () => {
@@ -96,7 +103,8 @@ contract("CryptoZombies", (accounts) => {
       await contractInstance.approve(bob, zombieId, {from: alice});
       await contractInstance.transferFrom(alice, bob, zombieId, {from: alice});
       const newOwner = await contractInstance.ownerOf(zombieId);
-      assert.equal(newOwner,bob);
+      //assert.equal(newOwner,bob);
+      expect(newOwner).to.equal(bob);
     }) 
   })
   it("zombies should be able to attack another zombie", async () => {
@@ -108,7 +116,8 @@ contract("CryptoZombies", (accounts) => {
     //TODO: increase the time
     await time.increase(time.duration.days(1));
     await contractInstance.attack(firstZombieId, secondZombieId, {from: alice});
-    assert.equal(result.receipt.status, true);
+    //assert.equal(result.receipt.status, true);
+    expect(result.receipt.status).to.equal(true);
 })
   
 })
