@@ -1,4 +1,4 @@
-pragma solidity >=0.4.21 <0.7.0;
+pragma solidity ^0.5.16;
 
 contract ERC721 {
   event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);
