@@ -1,6 +1,12 @@
+//Initialize `truffle-hdwallet-provider`
+var HDWalletProvider = require("truffle-hdwallet-provider");
+
+//Initialize LoomTruffleProvider
+const LoomTruffleProvider = require('loom-truffle-provider')
+
 // Set your own mnemonic here
 const mnemonic = "YOUR_MNEMONIC";
-var HDWalletProvider = require("truffle-hdwallet-provider");
+
 // Module exports to make this configuration available to Truffle itself
 module.exports = {
   // Object with configuration for each network
@@ -22,6 +28,17 @@ module.exports = {
       },
       //Network id is 4 for Rinkeby
       network_id: "4"
+    },
+    //Put here the configuration for loom_dapp_chain
+    loom_testnet: {
+      provider: function() {
+        const privateKey = 'YOUR_PRIVATE_KEY'
+        const chainId = 'extdev-plasma-us1';
+        const writeUrl = 'http://extdev-plasma-us1.dappchains.com:80/rpc';
+        const readUrl = 'http://extdev-plasma-us1.dappchains.com:80/query';
+        return new LoomTruffleProvider(chainId, writeUrl, readUrl, privateKey);
+        },
+      network_id: '9545242630824'
     }
   }
 }; 
