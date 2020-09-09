@@ -20,6 +20,7 @@ module.exports = {
         // Setting the provider with the Infura Rinkeby address and Token
         return new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/v3/YOUR_TOKEN")
       },
+      //Network id is 4 for Rinkeby
       network_id: "4"
     }
   }
